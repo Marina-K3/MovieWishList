@@ -189,8 +189,8 @@ fun Home(onClick: () -> Unit, movieViewModel: MovieViewModel) {
             movies.forEach { movie ->
                 MovieItem(
                     movie = movie,
-                    onDelete = { /* Удалить фильм */ },
-                    onEdit = { /* Редактировать фильм */ }
+                    onDelete = { movieViewModel.deleteMovie(movie) },
+                    onEdit = { movieViewModel.deleteMovie(movie) }
                 )
             }
         }

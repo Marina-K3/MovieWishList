@@ -64,7 +64,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation ("io.insert-koin:koin-androidx-compose:3.4.3")
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
-
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 //    implementation ("androidx.room:room-ktx:2.5.0")
 //    kapt (KaptOptions("androidx.room:room-compiler:2.5.0"))
     implementation ("androidx.compose.runtime:runtime-livedata:1.1.0")
