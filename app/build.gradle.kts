@@ -67,10 +67,10 @@ dependencies {
 
 //    implementation ("androidx.room:room-ktx:2.5.0")
 //    kapt (KaptOptions("androidx.room:room-compiler:2.5.0"))
+    implementation ("androidx.compose.runtime:runtime-livedata:1.1.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
     implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
-
     implementation ("androidx.compose.material:material: 1.5.1")
     implementation ("androidx.compose.ui:ui-tooling:1.5.1")
     testImplementation(libs.junit)

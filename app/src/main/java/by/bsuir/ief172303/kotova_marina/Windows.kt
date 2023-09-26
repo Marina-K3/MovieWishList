@@ -1,19 +1,22 @@
 package by.bsuir.ief172303.kotova_marina
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.getValue
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import by.bsuir.ief172303.kotova_marina.models.Movie
+import by.bsuir.ief172303.kotova_marina.models.MovieViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 
 @Composable
 fun About(onClick: () -> Unit) {
@@ -115,11 +121,12 @@ fun About(onClick: () -> Unit) {
 }
 
 @Composable
-fun Home(onClick: () -> Unit) {
+fun Home(onClick: () -> Unit, movieViewModel: MovieViewModel) {
+    
+    val movies: List<Movie> by movieViewModel.movies.observeAsState(emptyList())
     Column(
         modifier = Modifier
             .fillMaxSize()
-
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -145,6 +152,8 @@ fun Home(onClick: () -> Unit) {
             modifier = Modifier.padding(vertical = 16.dp)
         )
 
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(
             colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1)),
             onClick = onClick,
@@ -153,8 +162,37 @@ fun Home(onClick: () -> Unit) {
             Text(
                 text = "About",
                 color = Color.White,
+                fontSize = 16.sp
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1)),
+            onClick = { /* Добавить новый фильм */ },
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(
+                text = "Добавить фильм",
+                color = Color.White,
                 fontSize = 16.sp,
             )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 16.dp)
+        ) {
+            movies.forEach { movie ->
+                MovieItem(
+                    movie = movie,
+                    onDelete = { /* Удалить фильм */ },
+                    onEdit = { /* Редактировать фильм */ }
+                )
+            }
         }
     }
 }
