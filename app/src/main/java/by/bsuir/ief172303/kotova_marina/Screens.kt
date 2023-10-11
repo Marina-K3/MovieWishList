@@ -196,20 +196,6 @@ fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () ->
         }
 
 
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1)),
-            onClick = { /* Добавить новый фильм */ },
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Text(
-                text = "Добавить фильм",
-                color = Color.White,
-                fontSize = 16.sp,
-            )
-        }
     }
 }
 
