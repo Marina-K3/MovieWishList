@@ -30,10 +30,10 @@ class MovieRepository {
         val json = response.body<String>()
         Log.d("MARINA", "рейтинговые фильмы - $json")
         val movieList = gson.fromJson(json, Map::class.java)["films"] as List<Map<String, Any>>
-        val top10Films = movieList.take(10)
+        val top20Films = movieList.take(20)
         val movies = mutableListOf<Movie>()
 
-        for (film in top10Films) {
+        for (film in top20Films) {
             val filmId = (film["filmId"] as Double).toInt()
             val movieDetails = getMovieDetails(filmId)
             val directors = getMovieStaff(filmId)

@@ -210,6 +210,7 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
         Column {
             Text(text = movie.name, fontWeight = FontWeight.Bold)
             Text(text = "Год: ${movie.year}")
+
         }
     }
 }
@@ -229,17 +230,22 @@ fun MovieDetails(movieId: Int, onBackClick: () -> Unit, viewModel: MovieViewMode
         movie?.let { movie ->
             Text(text = movie.name, fontWeight = FontWeight.Bold)
             Text(text = "Год: ${movie.year}")
+            Text(text = "Рейтинг: ${movie.rating}")
             Text(text = "Описание: ${movie.description}")
+            Text(text = "Режиссеры: ${movie.directors}")
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = onBackClick,
-            modifier = Modifier.padding(bottom = 16.dp)
-        ) {
-            Text(text = "Назад")
-        }
+    }
+
+    Spacer(modifier = Modifier.height(16.dp))
+
+    Button(
+        onClick = onBackClick,
+        modifier = Modifier.padding(bottom = 16.dp),
+        colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1))
+    ) {
+        Text(text = "Назад")
     }
 }
 
@@ -259,7 +265,8 @@ fun Movies(onMovieClick: (Int) -> Unit, onBackClick: () -> Unit, viewModel: Movi
 
     Button(
         onClick = onBackClick,
-        modifier = Modifier.padding(bottom = 16.dp)
+        modifier = Modifier.padding(bottom = 16.dp),
+        colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1)),
     ) {
         Text(text = "Назад")
     }
