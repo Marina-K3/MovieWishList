@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Slider
 import androidx.compose.runtime.getValue
 import androidx.compose.material3.Text
@@ -48,7 +49,7 @@ import coil.transform.RoundedCornersTransformation
 
 @Composable
 fun About(onClick: () -> Unit) {
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
     Column(
         modifier = Modifier
@@ -142,7 +143,7 @@ fun About(onClick: () -> Unit) {
 @Composable
 fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () -> Unit) {
 
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -219,7 +220,7 @@ fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () ->
 
 @Composable
 fun MovieItem(movie: Movie, onClick: () -> Unit) {
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -264,7 +265,7 @@ fun MovieDetails(
 ) {
     val movieState by viewModel.movies.observeAsState(emptyList())
     val movie = movieState.find { it.id == movieId }
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
     LazyColumn(
         modifier = Modifier.fillMaxSize()
@@ -329,11 +330,15 @@ fun MovieDetails(
         }
     }
 }
-
 @Composable
-fun Movies(onMovieClick: (Int) -> Unit, onBackClick: () -> Unit, viewModel: MovieViewModel) {
+fun Movies(
+    onMovieClick: (Int) -> Unit,
+    onBackClick: () -> Unit,
+    viewModel: MovieViewModel
+) {
     val moviesState by viewModel.movies.observeAsState(emptyList())
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val isLoading by viewModel.isLoading.observeAsState(false)
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
     Column(
         modifier = Modifier
@@ -354,17 +359,20 @@ fun Movies(onMovieClick: (Int) -> Unit, onBackClick: () -> Unit, viewModel: Movi
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        LazyColumn {
-
-            items(moviesState) { movie ->
-                MovieItem(movie = movie, onClick = { onMovieClick(movie.id) })
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(60.dp),
+                color = Color(0xFFBC0DC1)
+            )
+        } else {
+            LazyColumn {
+                items(moviesState) { movie ->
+                    MovieItem(movie = movie, onClick = { onMovieClick(movie.id) })
+                }
             }
         }
     }
-
-
 }
-
 @Composable
 fun Favorites(
     onFavoriteMovieClick: (Int) -> Unit,
@@ -372,7 +380,7 @@ fun Favorites(
     viewModel: MovieViewModel
 ) {
     val favoriteMoviesState by viewModel.favoriteMovies.observeAsState(emptyList())
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
     Column(
         modifier = Modifier
@@ -409,7 +417,7 @@ fun Favorites(
 
 @Composable
 fun FavoriteMovieItem(f_movie: MovieViewModel.FavoriteMovie, onFavoriteMovieClick: (Int) -> Unit) {
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -459,7 +467,7 @@ fun FavoriteMovieDetails(
 
     val movieState by viewModel.favoriteMovies.observeAsState(emptyList())
     val f_movie = movieState.find { it.movie.id == f_movie_id }
-    val customFontFamily = FontFamily(Font(R.font.RezaZulmiSans))
+    val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
 
     var reviewText by remember { mutableStateOf(f_movie?.comment ?: "") }

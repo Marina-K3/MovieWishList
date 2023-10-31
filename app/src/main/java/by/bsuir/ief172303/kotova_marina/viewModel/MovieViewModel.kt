@@ -18,6 +18,9 @@ class MovieViewModel(
     private val _favoriteMovies = MutableLiveData<List<FavoriteMovie>>()
     val favoriteMovies: LiveData<List<FavoriteMovie>> get() = _favoriteMovies
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     init {
         if (savedStateHandle.contains(MOVIES_KEY)) {
             _movies.value = savedStateHandle.get<List<Movie>>(MOVIES_KEY)
@@ -40,9 +43,11 @@ class MovieViewModel(
 
     private fun loadMovies() {
         viewModelScope.launch {
+            _isLoading.value = true
             val topRatedMovies = movieRepository.getTopRatedMovies()
             _movies.value = topRatedMovies
             savedStateHandle.set(MOVIES_KEY, topRatedMovies)
+            _isLoading.value = false
         }
     }
 
@@ -52,7 +57,6 @@ class MovieViewModel(
         _favoriteMovies.value = currentFavorites
         savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
     }
-
 
     fun submitReview(favoriteMovie: FavoriteMovie, comment: String, rating: Float) {
         val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
