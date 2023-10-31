@@ -14,7 +14,7 @@ import by.bsuir.ief172303.kotova_marina.viewModel.MovieViewModel
 
 
 class MainActivity : ComponentActivity() {
-    
+
     private val viewModel: MovieViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +64,32 @@ class MainActivity : ComponentActivity() {
                             viewModel = viewModel
                         )
                     }
+
+                    composable("Favorites") {
+                        Favorites(
+                            onFavoriteMovieClick = { favoriteMovieId ->
+                                navController.navigate("FavoriteMovieDetails/$favoriteMovieId")
+                            },
+                            onBackClick = { navController.popBackStack() },
+                            viewModel = viewModel
+                        )
+                    }
+
+                    composable(
+                        "FavoriteMovieDetails/{favoriteMovieId}",
+                        arguments = listOf(navArgument("favoriteMovieId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        val favoriteMovieId = backStackEntry.arguments?.getInt("favoriteMovieId")
+                        favoriteMovieId?.let { fMovieId ->
+                            FavoriteMovieDetails(
+                                f_movie_id = fMovieId,
+                                onBackClick = { navController.popBackStack() },
+                                viewModel = viewModel
+                            )
+                        }
+                    }
+
+
                 }
             }
         }

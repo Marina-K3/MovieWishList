@@ -15,8 +15,8 @@ class MovieViewModel(
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> get() = _movies
 
-    private val _favoriteMovies = MutableLiveData<List<Movie>>()
-    val favoriteMovies: LiveData<List<Movie>> get() = _favoriteMovies
+    private val _favoriteMovies = MutableLiveData<List<FavoriteMovie>>()
+    val favoriteMovies: LiveData<List<FavoriteMovie>> get() = _favoriteMovies
 
     init {
         if (savedStateHandle.contains(MOVIES_KEY)) {
@@ -26,13 +26,14 @@ class MovieViewModel(
         }
 
         if (savedStateHandle.contains(FAVORITE_MOVIES_KEY)) {
-            _favoriteMovies.value = savedStateHandle.get<List<Movie>>(FAVORITE_MOVIES_KEY)
+            _favoriteMovies.value = savedStateHandle.get<List<FavoriteMovie>>(FAVORITE_MOVIES_KEY)
         }
     }
 
     fun addToFavorites(movie: Movie) {
         val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
-        currentFavorites.add(movie)
+        val favoriteMovie = FavoriteMovie(movie, null, null)
+        currentFavorites.add(favoriteMovie)
         _favoriteMovies.value = currentFavorites
         savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
     }
@@ -45,7 +46,30 @@ class MovieViewModel(
         }
     }
 
+    fun removeFromFavorites(favoriteMovie: FavoriteMovie) {
+        val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
+        currentFavorites.remove(favoriteMovie)
+        _favoriteMovies.value = currentFavorites
+        savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
+    }
 
+
+    fun submitReview(favoriteMovie: FavoriteMovie, comment: String, rating: Float) {
+        val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
+        val index = currentFavorites.indexOfFirst { it.movie.id == favoriteMovie.movie.id }
+        if (index != -1) {
+            val updatedFavoriteMovie = favoriteMovie.copy(comment = comment, rating = rating)
+            currentFavorites[index] = updatedFavoriteMovie
+            _favoriteMovies.value = currentFavorites
+            savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
+        }
+    }
+
+    data class FavoriteMovie(
+        val movie: Movie,
+        val rating: Float?,
+        val comment: String?
+    )
 
     companion object {
         private const val MOVIES_KEY = "movies"
