@@ -1,9 +1,11 @@
 package by.bsuir.ief172303.kotova_marina
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -11,14 +13,20 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import by.bsuir.ief172303.kotova_marina.ui.theme.MovieWishListTheme
 import by.bsuir.ief172303.kotova_marina.viewModel.MovieViewModel
+import org.koin.androidx.compose.koinViewModel
 
+class MainActivity : AppCompatActivity()
+{
 
-class MainActivity : ComponentActivity() {
-
-    private val viewModel: MovieViewModel by viewModels()
+   // private val viewModel: MovieViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val viewModel: MovieViewModel = koinViewModel()
+//            ViewModelProvider(viewModel = viewModel){
+//
+//            }
+
 
 
             val navController = rememberNavController()

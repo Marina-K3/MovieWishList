@@ -1,3 +1,22 @@
 <resources>
+
     <string name="app_name">MovieWishList</string>
+    <string name="about_me">Котова Марина (172303)</string>
+    <string name="app_version">Версия приложения: 1.0</string>
+    <string name="about_app">Приложение-список фильмов на просмотр. " +
+                        "Любимые фильмы. Собственные заметки о фильмах. " +
+                        "Просмотр жанров, фильтрация по жанрам.</string>
+    <string name="but_back">Назад</string>
+    <string name="greeting">Добро пожаловать в MovieWishList!</string>
+    <string name="but_about">О приложении</string>
+    <string name="but_fav">Избранное</string>
+    <string name="but_movies">Фильмы</string>
+    <string name="but_add_fav">В избранное</string>
+    <string name="year">Год: </string>
+    <string name="rating">Рейтинг: </string>
+    <string name="description">Описание: </string>
+    <string name="directors">Режиссёры: </string>
+    <string name="but_delete_movie">Удалить из избранногo</string>
+    <string name="mess">Отзыв</string>
+    <string name="but_send_mess">Отправить отзыв</string>
 </resources>

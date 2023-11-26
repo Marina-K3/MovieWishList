@@ -1,7 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.com.android.application)
-    alias(libs.plugins.org.jetbrains.kotlin.android)
+    id("com.android.application")
+    id("kotlin-android")
+    id("kotlin-kapt")
 
 }
 
@@ -64,7 +65,6 @@ dependencies {
     implementation ("androidx.appcompat:appcompat:1.4.0")
     implementation("androidx.datastore:datastore:1.0.0")
 
-    implementation ("io.insert-koin:koin-androidx-compose:3.4.3")
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
     implementation ("androidx.compose.runtime:runtime-livedata:1.1.0")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
@@ -81,13 +81,26 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:1.6.4")
     implementation("io.ktor:ktor-client-core:1.6.4")
     implementation("io.ktor:ktor-client-json-jvm:1.6.4")
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
+
+// https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
 
     implementation("io.ktor:ktor-client-features:1.6.4")
     implementation ("io.ktor:ktor-client-serialization:2.3.4")
     implementation ("io.ktor:ktor-client-cio:2.3.4")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation ("com.google.code.gson:gson:2.8.8")
+
+    // https://mvnrepository.com/artifact/io.insert-koin/koin-android
+    implementation("io.insert-koin:koin-android:3.3.0")
+    implementation ("io.insert-koin:koin-androidx-compose:3.4.3")
+
+//    implementation("androidx.hilt:hilt-work:1.0.0")
+//    // When using Kotlin.
+//    kapt("androidx.hilt:hilt-compiler:1.0.0")
+    implementation("androidx.room:room-runtime:2.6.0")
+    kapt("androidx.room:room-compiler:2.6.0") // Используем kapt для Room
+    implementation("androidx.room:room-ktx:2.6.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

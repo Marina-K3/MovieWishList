@@ -1,4 +1,5 @@
 package by.bsuir.ief172303.kotova_marina.viewModel
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -6,17 +7,25 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import by.bsuir.ief172303.kotova_marina.model.Movie
 import by.bsuir.ief172303.kotova_marina.repository.MovieRepository
+import by.bsuir.ief172303.kotova_marina.repository.database.FavoriteMovieDao
+import by.bsuir.ief172303.kotova_marina.repository.database.FavoriteMovieEntity
 import kotlinx.coroutines.launch
-class MovieViewModel(
-    private val savedStateHandle: SavedStateHandle
-) : ViewModel() {
-    private val movieRepository = MovieRepository()
 
+
+
+class MovieViewModel(
+    private val savedStateHandle: SavedStateHandle,
+    private val movieRepository: MovieRepository, // Инжектируйте MovieRepository
+    private val favoriteMovieDao: FavoriteMovieDao // Инжектируйте FavoriteMovieDao
+) : ViewModel()
+{
+
+    // Используйте конструкторы для внедрения зависимостей
+
+    private val _favoriteMovies = MutableLiveData<List<FavoriteMovieEntity>>()
+    val favoriteMovies: LiveData<List<FavoriteMovieEntity>> get() = _favoriteMovies
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> get() = _movies
-
-    private val _favoriteMovies = MutableLiveData<List<FavoriteMovie>>()
-    val favoriteMovies: LiveData<List<FavoriteMovie>> get() = _favoriteMovies
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -26,19 +35,25 @@ class MovieViewModel(
             _movies.value = savedStateHandle.get<List<Movie>>(MOVIES_KEY)
         } else {
             loadMovies()
+            loadFavoriteMovies()
         }
+    }
 
-        if (savedStateHandle.contains(FAVORITE_MOVIES_KEY)) {
-            _favoriteMovies.value = savedStateHandle.get<List<FavoriteMovie>>(FAVORITE_MOVIES_KEY)
+    private fun loadFavoriteMovies() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            favoriteMovieDao.getAllFavoriteMovies().collect {
+                _favoriteMovies.value = it
+                _isLoading.value = false
+            }
         }
     }
 
     fun addToFavorites(movie: Movie) {
-        val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
-        val favoriteMovie = FavoriteMovie(movie, null, null)
-        currentFavorites.add(favoriteMovie)
-        _favoriteMovies.value = currentFavorites
-        savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
+        viewModelScope.launch {
+            val favoriteMovie = FavoriteMovieEntity(0, movie, null, null)
+            favoriteMovieDao.insertFavoriteMovie(favoriteMovie)
+        }
     }
 
     private fun loadMovies() {
@@ -51,32 +66,20 @@ class MovieViewModel(
         }
     }
 
-    fun removeFromFavorites(favoriteMovie: FavoriteMovie) {
-        val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
-        currentFavorites.remove(favoriteMovie)
-        _favoriteMovies.value = currentFavorites
-        savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
-    }
-
-    fun submitReview(favoriteMovie: FavoriteMovie, comment: String, rating: Float) {
-        val currentFavorites = _favoriteMovies.value.orEmpty().toMutableList()
-        val index = currentFavorites.indexOfFirst { it.movie.id == favoriteMovie.movie.id }
-        if (index != -1) {
-            val updatedFavoriteMovie = favoriteMovie.copy(comment = comment, rating = rating)
-            currentFavorites[index] = updatedFavoriteMovie
-            _favoriteMovies.value = currentFavorites
-            savedStateHandle.set(FAVORITE_MOVIES_KEY, currentFavorites)
+    fun removeFromFavorites(favoriteMovie: FavoriteMovieEntity) {
+        viewModelScope.launch {
+            favoriteMovieDao.deleteFavoriteMovie(favoriteMovie)
         }
     }
 
-    data class FavoriteMovie(
-        val movie: Movie,
-        val rating: Float?,
-        val comment: String?
-    )
+    fun submitReview(favoriteMovie: FavoriteMovieEntity, comment: String, rating: Float) {
+        viewModelScope.launch {
+            val updatedFavoriteMovie = favoriteMovie.copy(comment = comment, rating = rating)
+            favoriteMovieDao.insertFavoriteMovie(updatedFavoriteMovie)
+        }
+    }
 
     companion object {
         private const val MOVIES_KEY = "movies"
-        private const val FAVORITE_MOVIES_KEY = "favorite_movies"
     }
 }

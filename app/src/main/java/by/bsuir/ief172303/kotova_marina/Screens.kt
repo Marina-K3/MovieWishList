@@ -41,8 +41,10 @@ import androidx.compose.runtime.remember
 import by.bsuir.ief172303.kotova_marina.model.Movie
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import by.bsuir.ief172303.kotova_marina.model.FavoriteMovie
 import by.bsuir.ief172303.kotova_marina.viewModel.MovieViewModel
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
@@ -79,7 +81,7 @@ fun About(onClick: () -> Unit) {
                 modifier = Modifier.padding(10.dp)
             ) {
                 Text(
-                    text = "Котова Марина (172303)",
+                    text = stringResource(id = R.string.about_me),
                     fontSize = 14.sp,
                     fontFamily = customFontFamily,
                     color = Color.White,
@@ -87,7 +89,7 @@ fun About(onClick: () -> Unit) {
                 )
 
                 Text(
-                    text = "Версия приложения: 1.0",
+                    text = stringResource(id = R.string.app_version),
                     fontSize = 14.sp,
                     fontFamily = customFontFamily,
                     color = Color.White,
@@ -104,7 +106,7 @@ fun About(onClick: () -> Unit) {
 
 
             Text(
-                text = "MovieWishList",
+                text = stringResource(id = R.string.app_name),
                 fontFamily = customFontFamily,
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -113,9 +115,7 @@ fun About(onClick: () -> Unit) {
             )
 
             Text(
-                text = "Приложение-список фильмов на просмотр. " +
-                        "Любимые фильмы. Собственные заметки о фильмах. " +
-                        "Просмотр жанров, фильтрация по жанрам.",
+                text = stringResource(id = R.string.about_app),
                 fontSize = 14.sp,
                 fontFamily = customFontFamily,
                 color = Color.White,
@@ -130,7 +130,7 @@ fun About(onClick: () -> Unit) {
                     .align(Alignment.CenterHorizontally)
             ) {
                 Text(
-                    text = "Назад",
+                    text = stringResource(id = R.string.but_back),
                     fontFamily = customFontFamily,
                     color = Color.White,
                     fontSize = 16.sp,
@@ -164,7 +164,7 @@ fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () ->
         }
 
         Text(
-            text = "Добро пожаловать в MovieWishList!",
+            text = stringResource(id = R.string.greeting),
             fontFamily = customFontFamily,
             color = Color.White,
             fontSize = 28.sp,
@@ -180,7 +180,7 @@ fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () ->
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = "О приложении",
+                text = stringResource(id = R.string.but_about),
                 fontFamily = customFontFamily,
                 color = Color.White,
                 fontSize = 16.sp,
@@ -194,7 +194,7 @@ fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () ->
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = "Избранное",
+                text = stringResource(id = R.string.but_fav),
                 fontFamily = customFontFamily,
                 color = Color.White,
                 fontSize = 16.sp,
@@ -207,7 +207,7 @@ fun Home(onFavoritesClick: () -> Unit, onMoviesClick: () -> Unit, onClick: () ->
                 .align(Alignment.CenterHorizontally)
         ) {
             Text(
-                text = "Фильмы",
+                text = stringResource(id = R.string.but_movies),
                 fontFamily = customFontFamily,
                 color = Color.White,
                 fontSize = 16.sp,
@@ -250,8 +250,8 @@ fun MovieItem(movie: Movie, onClick: () -> Unit) {
             }
             Column {
                 Text(text = movie.name, fontWeight = FontWeight.Bold,  fontFamily = customFontFamily,color = Color.White)
-                Text(text = "Год: ${movie.year}", fontFamily = customFontFamily,color = Color.White)
-                Text(text = "Рейтинг: ${movie.rating}", fontFamily = customFontFamily,color = Color.White)
+                Text(text = stringResource(id = R.string.year) + movie.year, fontFamily = customFontFamily,color = Color.White)
+                Text(text = stringResource(id = R.string.rating) + movie.rating, fontFamily = customFontFamily,color = Color.White)
             }
         }
     }
@@ -299,13 +299,13 @@ fun MovieDetails(
                     Row(modifier = Modifier.padding(16.dp)) {
                         Column {
                             Text(text = movie.name, fontWeight = FontWeight.Bold, fontFamily = customFontFamily, color = Color.White)
-                            Text(text = "Год: ${movie.year}", fontFamily = customFontFamily, color = Color.White)
-                            Text(text = "Рейтинг: ${movie.rating}", fontFamily = customFontFamily, color = Color.White)
-                            Text(text = "Режиссеры: ${movie.directors}", fontFamily = customFontFamily, color = Color.White)
+                            Text(text = stringResource(id = R.string.year) + movie.year, fontFamily = customFontFamily, color = Color.White)
+                            Text(text = stringResource(id = R.string.rating) + movie.rating, fontFamily = customFontFamily, color = Color.White)
+                            Text(text = stringResource(id = R.string.directors) + movie.directors, fontFamily = customFontFamily, color = Color.White)
                         }
                     }
 
-                    Text(text = "Описание: ${movie.description}", fontFamily = customFontFamily, color = Color.White)
+                    Text(text = stringResource(id = R.string.description) + movie.description, fontFamily = customFontFamily, color = Color.White)
 
                     // Кнопка для добавления фильма в избранное
                     Button(
@@ -313,7 +313,7 @@ fun MovieDetails(
                         modifier = Modifier.padding(top = 16.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xFFBC0DC1))
                     ) {
-                        Text(text = "В избранное", fontFamily = customFontFamily, color = Color.White)
+                        Text(text = stringResource(id = R.string.but_add_fav), fontFamily = customFontFamily, color = Color.White)
                     }
                 }
 
@@ -324,7 +324,7 @@ fun MovieDetails(
                     modifier = Modifier.padding(bottom = 16.dp),
                     colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1))
                 ) {
-                    Text(text = "Назад", fontFamily = customFontFamily, color = Color.White)
+                    Text(text = stringResource(id = R.string.but_back), fontFamily = customFontFamily, color = Color.White)
                 }
             }
         }
@@ -354,7 +354,7 @@ fun Movies(
             modifier = Modifier.padding(bottom = 16.dp),
             colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1)),
         ) {
-            Text(text = "Назад", fontFamily = customFontFamily, color = Color.White)
+            Text(text = stringResource(id = R.string.but_back), fontFamily = customFontFamily, color = Color.White)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -382,6 +382,15 @@ fun Favorites(
     val favoriteMoviesState by viewModel.favoriteMovies.observeAsState(emptyList())
     val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
+    val favoriteMovies = favoriteMoviesState.map { favoriteMovieEntity ->
+        FavoriteMovie(
+            movie = favoriteMovieEntity.movie,
+            rating = favoriteMovieEntity.rating,
+            comment = favoriteMovieEntity.comment
+        )
+    }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -394,7 +403,7 @@ fun Favorites(
             Text(text = "Список избранных фильмов пуст", fontFamily = customFontFamily, color = Color.White)
         } else {
             LazyColumn {
-                items(favoriteMoviesState) { f_movie ->
+                items(favoriteMovies) { f_movie ->
                     FavoriteMovieItem(
                         f_movie = f_movie,
                         onFavoriteMovieClick = onFavoriteMovieClick
@@ -410,13 +419,13 @@ fun Favorites(
             modifier = Modifier.padding(bottom = 16.dp),
             colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1))
         ) {
-            Text(text = "Назад", fontFamily = customFontFamily, color = Color.White)
+            Text(text = stringResource(id = R.string.but_back), fontFamily = customFontFamily, color = Color.White)
         }
     }
 }
 
 @Composable
-fun FavoriteMovieItem(f_movie: MovieViewModel.FavoriteMovie, onFavoriteMovieClick: (Int) -> Unit) {
+fun FavoriteMovieItem(f_movie: FavoriteMovie, onFavoriteMovieClick: (Int) -> Unit) {
     val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
     Box(
         modifier = Modifier
@@ -450,9 +459,9 @@ fun FavoriteMovieItem(f_movie: MovieViewModel.FavoriteMovie, onFavoriteMovieClic
             }
             Column(Modifier.padding(start = 16.dp)) {
                 Text(text = f_movie.movie.name, fontWeight = FontWeight.Bold,  fontFamily = customFontFamily,color = Color.White)
-                Text(text = "Год: ${f_movie.movie.year}", fontFamily = customFontFamily,color = Color.White)
-                Text(text = "Рейтинг: ${f_movie.movie.rating}", fontFamily = customFontFamily,color = Color.White)
-                Text(text = "Режиссеры: ${f_movie.movie.directors}", fontFamily = customFontFamily,color = Color.White)
+                Text(text = stringResource(id = R.string.year) + f_movie.movie.year, fontFamily = customFontFamily,color = Color.White)
+                Text(text = stringResource(id = R.string.rating) + f_movie.movie.rating, fontFamily = customFontFamily,color = Color.White)
+                Text(text = stringResource(id = R.string.directors) + f_movie.movie.directors, fontFamily = customFontFamily,color = Color.White)
             }
         }
     }
@@ -504,9 +513,9 @@ fun FavoriteMovieDetails(
                 Row(modifier = Modifier.padding(16.dp)) {
                     Column {
                         Text(text = f_movie?.movie?.name.toString(), fontWeight = FontWeight.Bold, fontFamily = customFontFamily, color = Color.White)
-                        Text(text = "Год: ${f_movie?.movie?.year}", fontFamily = customFontFamily, color = Color.White)
-                        Text(text = "Рейтинг: ${f_movie?.movie?.rating}", fontFamily = customFontFamily, color = Color.White)
-                        Text(text = "Режиссеры: ${f_movie?.movie?.directors}", fontFamily = customFontFamily, color = Color.White)
+                        Text(text = stringResource(id = R.string.year) + f_movie?.movie?.year, fontFamily = customFontFamily, color = Color.White)
+                        Text(text = stringResource(id = R.string.rating) + f_movie?.movie?.rating, fontFamily = customFontFamily, color = Color.White)
+                        Text(text = stringResource(id = R.string.directors) + f_movie?.movie?.directors, fontFamily = customFontFamily, color = Color.White)
                     }
                 }
 
@@ -543,7 +552,7 @@ fun FavoriteMovieDetails(
                     modifier = Modifier.padding(top = 6.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFFBC0DC1))
                 ) {
-                    Text(text = "Отправить рецензию", fontFamily = customFontFamily, color = Color.White)
+                    Text(text = stringResource(id = R.string.but_send_mess), fontFamily = customFontFamily, color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -554,7 +563,7 @@ fun FavoriteMovieDetails(
                     modifier = Modifier.padding(bottom = 16.dp),
                     colors = ButtonDefaults.buttonColors(Color(0xFFBC0DC1))
                 ) {
-                    Text(text = "Удалить из избранного", fontFamily = customFontFamily, color = Color.White)
+                    Text(text = stringResource(id = R.string.but_delete_movie), fontFamily = customFontFamily, color = Color.White)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -564,7 +573,7 @@ fun FavoriteMovieDetails(
                     modifier = Modifier.padding(bottom = 36.dp),
                     colors = ButtonDefaults.outlinedButtonColors(Color(0xFFBC0DC1)),
                 ) {
-                    Text(text = "Назад", fontFamily = customFontFamily, color = Color.White)
+                    Text(text = stringResource(id = R.string.but_back), fontFamily = customFontFamily, color = Color.White)
                 }
             }
         }

@@ -10,10 +10,11 @@ import io.ktor.client.request.headers
 import kotlinx.coroutines.delay
 import kotlin.collections.filter
 
+
 class MovieRepository {
 
     private suspend fun delayBetweenRequests() {
-        delay(60) // Задержка 60 миллисекунд
+        delay(20) // Задержка 20 миллисекунд
     }
 
     private val httpClient = HttpClient()
