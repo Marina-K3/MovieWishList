@@ -262,7 +262,8 @@ fun MovieDetails(
     movieId: Int,
     onBackClick: () -> Unit,
     viewModel: MovieViewModel
-) {
+)
+{
     val movieState by viewModel.movies.observeAsState(emptyList())
     val movie = movieState.find { it.id == movieId }
     val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
@@ -330,6 +331,8 @@ fun MovieDetails(
         }
     }
 }
+
+
 @Composable
 fun Movies(
     onMovieClick: (Int) -> Unit,

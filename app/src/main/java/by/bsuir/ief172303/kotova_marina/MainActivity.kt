@@ -18,16 +18,10 @@ import org.koin.androidx.compose.koinViewModel
 class MainActivity : AppCompatActivity()
 {
 
-   // private val viewModel: MovieViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val viewModel: MovieViewModel = koinViewModel()
-//            ViewModelProvider(viewModel = viewModel){
-//
-//            }
-
-
 
             val navController = rememberNavController()
 
@@ -49,6 +43,8 @@ class MainActivity : AppCompatActivity()
                             navController.navigate("Home")
                         }
                     }
+
+
                     composable(
                         "MovieDetails/{movieId}",
                         arguments = listOf(navArgument("movieId") { type = NavType.IntType })
