@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MovieWishList" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.MovieWishList" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Добавляем новый item для изменения цвета фона -->
         <item name="android:windowBackground">#4e006b</item>
     </style>

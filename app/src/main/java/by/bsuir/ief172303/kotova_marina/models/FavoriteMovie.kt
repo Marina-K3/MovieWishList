@@ -1,4 +1,4 @@
-package by.bsuir.ief172303.kotova_marina.model
+package by.bsuir.ief172303.kotova_marina.models
 
 
 data class FavoriteMovie(

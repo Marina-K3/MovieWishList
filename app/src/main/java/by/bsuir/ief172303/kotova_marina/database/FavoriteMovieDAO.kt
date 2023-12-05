@@ -1,6 +1,5 @@
-package by.bsuir.ief172303.kotova_marina.repository.database
+package by.bsuir.ief172303.kotova_marina.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert

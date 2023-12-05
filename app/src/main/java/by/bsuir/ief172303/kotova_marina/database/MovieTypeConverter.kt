@@ -1,6 +1,6 @@
-package by.bsuir.ief172303.kotova_marina.repository.database
+package by.bsuir.ief172303.kotova_marina.database
 import androidx.room.TypeConverter
-import by.bsuir.ief172303.kotova_marina.model.Movie
+import by.bsuir.ief172303.kotova_marina.models.Movie
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

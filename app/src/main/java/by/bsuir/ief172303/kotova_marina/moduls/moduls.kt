@@ -1,12 +1,9 @@
 package by.bsuir.ief172303.kotova_marina.moduls
 
-import android.content.Context
-import androidx.lifecycle.SavedStateHandle
 import org.koin.androidx.viewmodel.dsl.viewModel
 import androidx.room.Room
 import by.bsuir.ief172303.kotova_marina.repository.MovieRepository
-import by.bsuir.ief172303.kotova_marina.repository.database.AppDatabase
-import by.bsuir.ief172303.kotova_marina.repository.database.FavoriteMovieDao
+import by.bsuir.ief172303.kotova_marina.database.AppDatabase
 import by.bsuir.ief172303.kotova_marina.viewModel.MovieViewModel
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module

@@ -1,4 +1,4 @@
-package by.bsuir.ief172303.kotova_marina.repository.database
+package by.bsuir.ief172303.kotova_marina.database
 
 import androidx.room.Room
 import org.koin.android.ext.koin.androidApplication

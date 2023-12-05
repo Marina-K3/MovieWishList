@@ -5,10 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import by.bsuir.ief172303.kotova_marina.model.Movie
+import by.bsuir.ief172303.kotova_marina.models.Movie
 import by.bsuir.ief172303.kotova_marina.repository.MovieRepository
-import by.bsuir.ief172303.kotova_marina.repository.database.FavoriteMovieDao
-import by.bsuir.ief172303.kotova_marina.repository.database.FavoriteMovieEntity
+import by.bsuir.ief172303.kotova_marina.database.FavoriteMovieDao
+import by.bsuir.ief172303.kotova_marina.database.FavoriteMovieEntity
+import by.bsuir.ief172303.kotova_marina.intent.FavoriteMovieIntent
+import by.bsuir.ief172303.kotova_marina.states.FavoriteMovieViewState
 import kotlinx.coroutines.launch
 
 
@@ -22,8 +24,9 @@ class MovieViewModel(
 
     // Используйте конструкторы для внедрения зависимостей
 
-    private val _favoriteMovies = MutableLiveData<List<FavoriteMovieEntity>>()
-    val favoriteMovies: LiveData<List<FavoriteMovieEntity>> get() = _favoriteMovies
+    private val _favoriteMovieViewState = MutableLiveData<FavoriteMovieViewState>()
+    val favoriteMovieViewState: LiveData<FavoriteMovieViewState> get() = _favoriteMovieViewState
+
     private val _movies = MutableLiveData<List<Movie>>()
     val movies: LiveData<List<Movie>> get() = _movies
 
@@ -42,8 +45,8 @@ class MovieViewModel(
     private fun loadFavoriteMovies() {
         viewModelScope.launch {
             _isLoading.value = true
-            favoriteMovieDao.getAllFavoriteMovies().collect {
-                _favoriteMovies.value = it
+            favoriteMovieDao.getAllFavoriteMovies().collect { favoriteMovies ->
+                _favoriteMovieViewState.value = FavoriteMovieViewState(favoriteMovies)
                 _isLoading.value = false
             }
         }
@@ -78,6 +81,23 @@ class MovieViewModel(
             favoriteMovieDao.insertFavoriteMovie(updatedFavoriteMovie)
         }
     }
+
+    private fun handleFavoriteMovieIntent(intent: FavoriteMovieIntent) {
+        when (intent) {
+            is FavoriteMovieIntent.LoadFavoriteMovies -> loadFavoriteMovies()
+            is FavoriteMovieIntent.RemoveFromFavorites -> removeFromFavorites(intent.favoriteMovie)
+            is FavoriteMovieIntent.SubmitReview -> submitReview(
+                intent.favoriteMovie,
+                intent.comment,
+                intent.rating
+            )
+        }
+    }
+
+    fun processFavoriteMovieIntent(intent: FavoriteMovieIntent) {
+        handleFavoriteMovieIntent(intent)
+    }
+
 
     companion object {
         private const val MOVIES_KEY = "movies"

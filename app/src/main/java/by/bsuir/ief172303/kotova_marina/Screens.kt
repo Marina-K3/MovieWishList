@@ -38,13 +38,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import by.bsuir.ief172303.kotova_marina.model.Movie
+import androidx.compose.runtime.rememberUpdatedState
+import by.bsuir.ief172303.kotova_marina.models.Movie
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import by.bsuir.ief172303.kotova_marina.model.FavoriteMovie
+import by.bsuir.ief172303.kotova_marina.models.FavoriteMovie
+import by.bsuir.ief172303.kotova_marina.states.FavoriteMovieViewState
 import by.bsuir.ief172303.kotova_marina.viewModel.MovieViewModel
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
@@ -330,6 +332,8 @@ fun MovieDetails(
         }
     }
 }
+
+
 @Composable
 fun Movies(
     onMovieClick: (Int) -> Unit,
@@ -337,8 +341,9 @@ fun Movies(
     viewModel: MovieViewModel
 ) {
     val moviesState by viewModel.movies.observeAsState(emptyList())
-    val isLoading by viewModel.isLoading.observeAsState(false)
     val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
+    val isLoading by rememberUpdatedState(newValue = viewModel.isLoading.value)
+
 
     Column(
         modifier = Modifier
@@ -359,30 +364,39 @@ fun Movies(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        if (isLoading) {
+        if (isLoading==true) {
             CircularProgressIndicator(
                 modifier = Modifier.size(60.dp),
                 color = Color(0xFFBC0DC1)
             )
         } else {
-            LazyColumn {
-                items(moviesState) { movie ->
-                    MovieItem(movie = movie, onClick = { onMovieClick(movie.id) })
+            if(moviesState.isNotEmpty()) {
+                LazyColumn {
+                    items(moviesState) { movie ->
+                        MovieItem(movie = movie, onClick = { onMovieClick(movie.id) })
+                    }
                 }
+            }else{
+                Text(text ="Нет фильмов")
             }
         }
     }
 }
+
+
+
 @Composable
 fun Favorites(
     onFavoriteMovieClick: (Int) -> Unit,
     onBackClick: () -> Unit,
     viewModel: MovieViewModel
 ) {
-    val favoriteMoviesState by viewModel.favoriteMovies.observeAsState(emptyList())
+    val favoriteMovieViewState by viewModel.favoriteMovieViewState.observeAsState(
+        FavoriteMovieViewState(emptyList())
+    )
     val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
-    val favoriteMovies = favoriteMoviesState.map { favoriteMovieEntity ->
+    val favoriteMovies = favoriteMovieViewState.favoriteMovies.map { favoriteMovieEntity ->
         FavoriteMovie(
             movie = favoriteMovieEntity.movie,
             rating = favoriteMovieEntity.rating,
@@ -399,7 +413,7 @@ fun Favorites(
         verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = Modifier.height(16.dp))
-        if (favoriteMoviesState.isEmpty()) {
+        if (favoriteMovieViewState.favoriteMovies.isEmpty()) {
             Text(text = "Список избранных фильмов пуст", fontFamily = customFontFamily, color = Color.White)
         } else {
             LazyColumn {
@@ -474,8 +488,8 @@ fun FavoriteMovieDetails(
     viewModel: MovieViewModel
 ) {
 
-    val movieState by viewModel.favoriteMovies.observeAsState(emptyList())
-    val f_movie = movieState.find { it.movie.id == f_movie_id }
+    val favoriteMovieViewState by viewModel.favoriteMovieViewState.observeAsState(FavoriteMovieViewState(emptyList()))
+    val f_movie = favoriteMovieViewState.favoriteMovies.find { it.movie.id == f_movie_id }
     val customFontFamily = FontFamily(Font(R.font.reza_zulmi_sans))
 
 

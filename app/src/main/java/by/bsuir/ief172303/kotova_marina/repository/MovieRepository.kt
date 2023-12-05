@@ -1,7 +1,7 @@
 package by.bsuir.ief172303.kotova_marina.repository
 
 import android.util.Log
-import by.bsuir.ief172303.kotova_marina.model.Movie
+import by.bsuir.ief172303.kotova_marina.models.Movie
 import com.google.gson.Gson
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
