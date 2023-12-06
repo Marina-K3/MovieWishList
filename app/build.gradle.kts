@@ -1,19 +1,20 @@
+import org.gradle.kotlin.dsl.`kotlin-dsl`
+
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
-
 }
 
 android {
     namespace = "by.bsuir.ief172303.kotova_marina"
-    compileSdk = 34
+    compileSdk = Configs.compileSdk
 
     defaultConfig {
         applicationId = "by.bsuir.ief172303.kotova_marina"
-        minSdk = 24
-        targetSdk = 33
+        minSdk = Configs.minSdk
+        targetSdk = Configs.targetSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -29,31 +30,36 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.3"
+        kotlinCompilerExtensionVersion = Configs.composeKotlinCompilerExtensionVersion
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+
 }
 
 dependencies {
-
     implementation(project(":data"))
     implementation(project(":domain"))
-
 
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -63,43 +69,32 @@ dependencies {
     implementation(libs.ui.graphics)
     implementation(libs.ui.tooling.preview)
     implementation(libs.material3)
-    implementation("io.coil-kt:coil:2.4.0")
-    implementation("io.coil-kt:coil-compose:2.4.0")
-    implementation("androidx.navigation:navigation-compose:2.7.1")
-    implementation ("androidx.appcompat:appcompat:1.4.0")
-    implementation("androidx.datastore:datastore:1.0.0")
-
-    implementation ("androidx.work:work-runtime-ktx:2.8.1")
-    implementation ("androidx.compose.runtime:runtime-livedata:1.1.0")
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
-    implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
-    implementation ("androidx.compose.material:material: 1.5.1")
-    implementation ("androidx.compose.ui:ui-tooling:1.5.1")
-    implementation ("ch.qos.logback:logback-classic:1.2.3" )
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
-
-// https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
-
-    implementation("io.ktor:ktor-client-features:1.6.4")
-    implementation ("io.ktor:ktor-client-serialization:2.3.4")
-    implementation ("io.ktor:ktor-client-cio:2.3.4")
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
-    implementation ("com.google.code.gson:gson:2.8.8")
-
-    // https://mvnrepository.com/artifact/io.insert-koin/koin-android
-    implementation("io.insert-koin:koin-android:3.3.0")
-    implementation ("io.insert-koin:koin-androidx-compose:3.4.3")
-
-    implementation("androidx.room:room-runtime:2.6.0")
-    kapt("androidx.room:room-compiler:2.6.0") // Используем kapt для Room
-    implementation("androidx.room:room-ktx:2.6.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
-
-
+    implementation(Dependencies.coil)
+    implementation(Dependencies.coilCompose)
+    implementation(Dependencies.navigationCompose)
+    implementation(Dependencies.appcompat)
+    implementation(Dependencies.datastore)
+    implementation(Dependencies.workRuntime)
+    implementation(Dependencies.lifecycleViewModel)
+    implementation(Dependencies.lifecycleRuntime)
+    implementation(Dependencies.lifecycleModel)
+    implementation(Dependencies.pagingRuntime)
+    implementation(Dependencies.composeMaterial)
+    implementation(Dependencies.composeUITooling)
+    implementation(Dependencies.logbackClassic)
+    implementation(Dependencies.kotlinxCoroutinesCore)
+    implementation(Dependencies.kotlinxCoroutinesAndroid)
+    implementation(Dependencies.kotlinStdlib)
+    implementation(Dependencies.ktorClientFeatures)
+    implementation(Dependencies.ktorClientSerialization)
+    implementation(Dependencies.ktorClientCio)
+    implementation(Dependencies.kotlinxSerializationJson)
+    implementation(Dependencies.gson)
+    implementation(Dependencies.koinAndroid)
+    implementation(Dependencies.koinAndroidxCompose)
+    implementation(Dependencies.roomRuntime)
+    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.roomKtx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -107,5 +102,4 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-
 }

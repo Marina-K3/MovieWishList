@@ -1,0 +1,1 @@
+C:\Users\Admin\AndroidStudioProjects\MovieWishList\buildSrc\build\classes\kotlin\main\Configs.class;C:\Users\Admin\AndroidStudioProjects\MovieWishList\buildSrc\build\classes\kotlin\main\Dependencies.class;C:\Users\Admin\AndroidStudioProjects\MovieWishList\buildSrc\build\classes\kotlin\main\Versions.class

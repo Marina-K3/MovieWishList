@@ -40,22 +40,14 @@ dependencies {
 
     implementation(project(":domain"))
 
-    implementation("androidx.room:room-runtime:2.6.0")
-    kapt("androidx.room:room-compiler:2.6.0") // Используем kapt для Room
-    implementation("androidx.room:room-ktx:2.6.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
-
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
-    implementation ("com.google.code.gson:gson:2.8.8")
-
-    implementation("io.ktor:ktor-client-features:1.6.4")
-    implementation ("io.ktor:ktor-client-serialization:2.3.4")
-    implementation ("io.ktor:ktor-client-cio:2.3.4")
-    implementation("io.ktor:ktor-client-okhttp:1.6.4")
-    implementation("io.ktor:ktor-client-json:1.6.4")
-    implementation("io.ktor:ktor-client-logging:1.6.4")
-    implementation("io.ktor:ktor-client-core:1.6.4")
-    implementation("io.ktor:ktor-client-json-jvm:1.6.4")
+    implementation(Dependencies.roomRuntime)
+    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.roomKtx)
+    implementation(Dependencies.kotlinStdlib)
+    implementation(Dependencies.kotlinxSerializationJson)
+    implementation(Dependencies.gson)
+    implementation(Dependencies.ktorClientFeatures)
+    implementation(Dependencies.ktorClientSerialization)
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
