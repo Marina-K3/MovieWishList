@@ -4,7 +4,7 @@ object Versions {
     const val appcompat = "1.4.0"
     const val datastore = "1.0.0"
     const val workRuntime = "2.8.1"
-    const val lifecycleViewModel = "2.5.1"
+    const val lifecycleViewModel = "1.1.0"
     const val lifecycleRuntime = "2.5.1"
     const val pagingRuntime = "3.1.1"
     const val composeMaterial = "1.5.1"

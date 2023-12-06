@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.`kotlin-dsl`
-
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("com.android.application")
@@ -55,6 +53,8 @@ android {
     }
 
 
+
+
 }
 
 dependencies {
@@ -88,6 +88,7 @@ dependencies {
     implementation(Dependencies.ktorClientFeatures)
     implementation(Dependencies.ktorClientSerialization)
     implementation(Dependencies.ktorClientCio)
+
     implementation(Dependencies.kotlinxSerializationJson)
     implementation(Dependencies.gson)
     implementation(Dependencies.koinAndroid)
